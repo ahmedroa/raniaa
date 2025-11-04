@@ -90,6 +90,33 @@
             align-items: center;
         }
 
+        .nav-social-links {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            margin-left: 2rem;
+        }
+
+        .nav-social-links a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-social-links a:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
         .nav-links a {
             text-decoration: none;
             color: var(--text-dark);
@@ -132,18 +159,20 @@
         /* Hero Section */
         .hero {
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 4rem;
+            justify-content: center;
+            gap: 3rem;
             padding: 8rem 3rem 4rem;
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            text-align: center;
         }
 
         .hero-text {
-            padding-left: 2rem;
+            width: 100%;
         }
 
         .hero-label {
@@ -154,7 +183,7 @@
             border-radius: 20px;
             font-size: 0.9rem;
             font-weight: 700;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             animation: fadeInUp 0.6s ease;
         }
 
@@ -163,7 +192,7 @@
             font-weight: 900;
             color: var(--text-dark);
             line-height: 1.1;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             letter-spacing: -2px;
             animation: fadeInUp 0.6s ease 0.2s both;
         }
@@ -171,7 +200,7 @@
         .hero-subtitle {
             font-size: 1.3rem;
             color: var(--text-gray);
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             line-height: 1.6;
             animation: fadeInUp 0.6s ease 0.4s both;
         }
@@ -181,6 +210,9 @@
             color: var(--text-gray);
             line-height: 1.8;
             margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
             animation: fadeInUp 0.6s ease 0.6s both;
         }
 
@@ -227,6 +259,7 @@
         .hero-cta {
             display: flex;
             gap: 1rem;
+            justify-content: center;
             margin-bottom: 3rem;
             animation: fadeInUp 0.6s ease 0.8s both;
         }
@@ -286,7 +319,9 @@
         .social-links {
             display: flex;
             gap: 1rem;
-            animation: fadeInUp 0.6s ease 1s both;
+            justify-content: center;
+            animation: fadeInUp 0.6s ease;
+            margin-bottom: 2rem;
         }
 
         .social-links a {
@@ -314,6 +349,16 @@
         .hero-image {
             position: relative;
             animation: fadeInUp 0.6s ease 0.4s both;
+            order: 2;
+        }
+        
+        .hero-profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            order: 2;
+            margin: 2rem 0;
         }
 
         .profile-container {
@@ -832,9 +877,7 @@
         /* Responsive Design */
         @media (max-width: 968px) {
             .hero {
-                grid-template-columns: 1fr;
                 padding: 5.5rem 1.8rem 3rem;
-                text-align: center;
                 gap: 2.5rem;
             }
 
@@ -880,6 +923,7 @@
             .social-links {
                 justify-content: center;
                 gap: 0.8rem;
+                margin-bottom: 1.5rem;
             }
 
             .social-links a {
@@ -888,8 +932,8 @@
                 font-size: 1.1rem;
             }
 
-            .hero-image {
-                order: -1;
+            .hero-profile-section {
+                gap: 1.5rem;
             }
 
             .profile-container {
@@ -920,6 +964,19 @@
                 transition: right 0.3s ease;
                 box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
                 overflow-y: auto;
+            }
+
+            .nav-social-links {
+                margin-left: 0;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+
+            .nav-social-links a {
+                width: 42px;
+                height: 42px;
+                font-size: 1.1rem;
             }
 
             .nav-links.active {
@@ -1121,6 +1178,19 @@
 
             .nav-links a {
                 font-size: 0.9rem;
+            }
+
+            .nav-social-links {
+                margin-left: 0;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.6rem;
+            }
+
+            .nav-social-links a {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
 
             section {
@@ -1351,11 +1421,28 @@
                 <i class="fas fa-bars"></i>
             </button>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#about" onclick="closeMenu()">من أنا</a></li>
-                <li><a href="#services" onclick="closeMenu()">الخدمات</a></li>
-                <li><a href="#experience" onclick="closeMenu()">الخبرات</a></li>
-                <li><a href="#projects" onclick="closeMenu()">المشاريع</a></li>
-                <li><a href="#contact" onclick="closeMenu()">تواصل معي</a></li>
+                <li>
+                    <div class="nav-social-links">
+                        <a href="https://x.com/Rania__Alanazi" target="_blank" rel="noopener noreferrer" aria-label="تويتر">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@2000rn?_r=1&_t=ZS-910ToJhBnko" target="_blank" rel="noopener noreferrer" aria-label="تيك توك">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://www.instagram.com/p/C9jIW7xIOYx/?igsh=MTB6NWFlcWRnank4cA==" target="_blank" rel="noopener noreferrer" aria-label="انستقرام">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.snapchat.com/add/rania_alanazi" target="_blank" rel="noopener noreferrer" aria-label="سناب شات">
+                            <i class="fab fa-snapchat"></i>
+                        </a>
+                        <a href="https://wa.me/966558134071" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/raniya-alanazi-684a07237" target="_blank" rel="noopener noreferrer" aria-label="لينكد إن">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </li>
                 <li>
                     <button class="lang-toggle" onclick="toggleLanguage()">
                         <i class="fas fa-globe"></i>
@@ -1368,10 +1455,22 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-text">
-            <span class="hero-label">السيدة سماعة 👋</span>
-            <h1>رانيا العنزي</h1>
-            <p class="hero-subtitle">أخصائية سمع واتزان</p>
+        <!-- Profile Image and Name in Center -->
+        <div class="hero-profile-section" style="order: 2;">
+            <div class="hero-image">
+                <div class="profile-container">
+                    <img src="img/logo.jpeg" alt="رانيا العنزي" class="profile-img">
+                </div>
+            </div>
+            <div class="hero-text">
+                <span class="hero-label">السيدة سماعة 👋</span>
+                <h1>رانيا العنزي</h1>
+                <p class="hero-subtitle">أخصائية سمع واتزان</p>
+            </div>
+        </div>
+
+        <!-- Description and CTA at Bottom -->
+        <div class="hero-text" style="order: 3;">
             <p class="hero-description">محبة وشغوفة بعلم السمعيات، أعمل على تحسين جودة حياة الأفراد الذين يعانون من ضعف السمع باستخدام أحدث التقنيات والحلول المبتكرة.</p>
             
             <div class="hero-cta">
@@ -1380,33 +1479,6 @@
                     تواصل معي
                 </a>
                 <a href="#about" class="btn-secondary">اعرف المزيد</a>
-            </div>
-
-            <div class="social-links">
-                <a href="https://x.com/Rania__Alanazi" target="_blank" rel="noopener noreferrer" aria-label="تويتر">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.tiktok.com/@2000rn?_r=1&_t=ZS-910ToJhBnko" target="_blank" rel="noopener noreferrer" aria-label="تيك توك">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://www.instagram.com/p/C9jIW7xIOYx/?igsh=MTB6NWFlcWRnank4cA==" target="_blank" rel="noopener noreferrer" aria-label="انستقرام">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.snapchat.com/add/rania_alanazi" target="_blank" rel="noopener noreferrer" aria-label="سناب شات">
-                    <i class="fab fa-snapchat"></i>
-                </a>
-                <a href="https://wa.me/966558134071" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/raniya-alanazi-684a07237" target="_blank" rel="noopener noreferrer" aria-label="لينكد إن">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-            </div>
-        </div>
-
-        <div class="hero-image">
-            <div class="profile-container">
-                <img src="img/logo.jpeg" alt="رانيا العنزي" class="profile-img">
             </div>
         </div>
     </section>
