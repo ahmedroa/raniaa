@@ -180,7 +180,6 @@
             font-size: 0.9rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            animation: fadeInUp 0.6s ease;
         }
 
         .hero h1 {
@@ -190,7 +189,26 @@
             line-height: 1.1;
             margin-bottom: 1rem;
             letter-spacing: -2px;
-            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .typing-text {
+            display: inline-block;
+            min-height: 1.2em;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: var(--primary-blue);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .hero-subtitle {
@@ -1426,8 +1444,10 @@
 
         <!-- Label and Name -->
         <div class="hero-text" style="order: 2;">
-            <span class="hero-label">السيدة سماعة 👋</span>
-            <h1>رانيا العنزي</h1>
+            <h1>
+                <span class="typing-text" id="typingText"></span>
+                <span class="typing-cursor"></span>
+            </h1>
             <p class="hero-subtitle">أخصائية سمع واتزان</p>
         </div>
 
@@ -1740,6 +1760,84 @@
             
             document.getElementById('langText').textContent = isArabic ? 'English' : 'العربية';
         }
+
+        // Typing Animation
+        function typeText(element, text, speed = 100, callback = null) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            
+            type();
+        }
+
+        // Delete text animation
+        function deleteText(element, speed = 50, callback = null) {
+            let text = element.textContent;
+            let i = text.length;
+            
+            function del() {
+                if (i > 0) {
+                    element.textContent = text.substring(0, i - 1);
+                    i--;
+                    setTimeout(del, speed);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            
+            del();
+        }
+
+        // Start typing animation when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            const texts = [
+                'السيدة سماعة 👋',
+                'رانيا العنزي'
+            ];
+            let currentIndex = 0;
+            let isTyping = false;
+            
+            const typingText = document.getElementById('typingText');
+            const typingCursor = typingText?.nextElementSibling;
+            
+            if (typingText) {
+                function cycleTexts() {
+                    if (isTyping) return;
+                    isTyping = true;
+                    
+                    const currentText = texts[currentIndex];
+                    
+                    // Type the current text
+                    typeText(typingText, currentText, 100, () => {
+                        // Wait before deleting
+                        setTimeout(() => {
+                            deleteText(typingText, 50, () => {
+                                // Move to next text
+                                currentIndex = (currentIndex + 1) % texts.length;
+                                isTyping = false;
+                                
+                                // Wait before typing next text
+                                setTimeout(() => {
+                                    cycleTexts();
+                                }, 500);
+                            });
+                        }, 2000); // Show text for 2 seconds
+                    });
+                }
+                
+                // Start the cycle
+                cycleTexts();
+            }
+        });
 
         // Custom Cursor (desktop only)
         if (window.innerWidth > 968) {
