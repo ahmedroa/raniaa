@@ -1428,13 +1428,9 @@
         <div class="hero-text" style="order: 2;">
             <span class="hero-label">السيدة سماعة 👋</span>
             <h1>
-                <span class="typing-text" id="typingName"></span>
+                <span class="typing-text" id="typingText"></span>
                 <span class="typing-cursor"></span>
             </h1>
-            <p class="hero-subtitle">
-                <span class="typing-text" id="typingSubtitle"></span>
-                <span class="typing-cursor"></span>
-            </p>
         </div>
 
         <!-- Description at Bottom -->
@@ -1777,59 +1773,42 @@
 
         // Start typing animation when page loads
         window.addEventListener('DOMContentLoaded', () => {
-            const nameText = 'رانيا العنزي';
-            const subtitleText = 'أخصائية سمع واتزان';
+            const texts = [
+                'رانيا العنزي',
+                'أخصائية سمع واتزان'
+            ];
+            let currentIndex = 0;
+            let isTyping = false;
             
-            const typingName = document.getElementById('typingName');
-            const typingSubtitle = document.getElementById('typingSubtitle');
+            const typingText = document.getElementById('typingText');
             
-            let isTypingName = false;
-            let isTypingSubtitle = false;
-            
-            function cycleName() {
-                if (isTypingName) return;
-                isTypingName = true;
+            if (typingText) {
+                function cycleTexts() {
+                    if (isTyping) return;
+                    isTyping = true;
+                    
+                    const currentText = texts[currentIndex];
+                    
+                    // Type the current text
+                    typeText(typingText, currentText, 100, () => {
+                        // Wait before deleting
+                        setTimeout(() => {
+                            deleteText(typingText, 50, () => {
+                                // Move to next text
+                                currentIndex = (currentIndex + 1) % texts.length;
+                                isTyping = false;
+                                
+                                // Wait before typing next text
+                                setTimeout(() => {
+                                    cycleTexts();
+                                }, 500);
+                            });
+                        }, 2000); // Show text for 2 seconds
+                    });
+                }
                 
-                // Type name
-                typeText(typingName, nameText, 100, () => {
-                    // Wait before deleting
-                    setTimeout(() => {
-                        deleteText(typingName, 50, () => {
-                            isTypingName = false;
-                            // Wait before typing name again
-                            setTimeout(() => {
-                                cycleName();
-                            }, 500);
-                        });
-                    }, 2000); // Show for 2 seconds
-                });
-            }
-            
-            function cycleSubtitle() {
-                if (isTypingSubtitle) return;
-                isTypingSubtitle = true;
-                
-                // Type subtitle
-                typeText(typingSubtitle, subtitleText, 100, () => {
-                    // Wait before deleting
-                    setTimeout(() => {
-                        deleteText(typingSubtitle, 50, () => {
-                            isTypingSubtitle = false;
-                            // Wait before typing subtitle again
-                            setTimeout(() => {
-                                cycleSubtitle();
-                            }, 500);
-                        });
-                    }, 2000); // Show for 2 seconds
-                });
-            }
-            
-            if (typingName && typingSubtitle) {
-                // Start both cycles
-                cycleName();
-                setTimeout(() => {
-                    cycleSubtitle();
-                }, 1000); // Start subtitle after 1 second
+                // Start the cycle
+                cycleTexts();
             }
         });
 
